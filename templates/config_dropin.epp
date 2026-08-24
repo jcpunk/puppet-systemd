@@ -1,0 +1,24 @@
+<%- |
+  String $section,
+  HashHash[String[1], Variant[String[1], Numeric, Array[String[1]] $settings,
+  Optional[Array[String]] $comments = undef,
+| -%>
+# This file is managed with puppet
+<% if $comments { -%>
+#
+<%   $comments.each |$msg| { -%>
+# <%= $msg %>
+<%   } -%>
+<% } -%>
+#
+[<%= $section %>]
+<% $settings.each |$key, $value| { -%>
+<%- if $value =~ Array { -%>
+<%    $value.each |$multivalue| { -%>
+<%= $key %>=<%= $multivalue %>
+<%    } -%>
+<%  } -%>
+<%- else -%>
+<%= $key %>=<%= $value %>
+<% } -%>
+<% } -%>
