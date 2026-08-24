@@ -310,6 +310,51 @@
 # @param sleep_settings
 #   Config Hash that is used to configure settings in sleep.conf
 #
+# @param sleep_use_etc_conf
+#   Whether to use the /etc/systemd/sleep.conf file.
+#
+# @param sleep_purge_dropin_dirs
+#   Whether to purge the sleep dropin directories. This will remove any files in the dropin directories that are not managed by Puppet.
+#
+# @param timesyncd_settings
+#   Config Hash that is used to configure settings in timesyncd.conf
+#
+# @param timesyncd_use_etc_conf
+#   Whether to use the /etc/systemd/timesyncd.conf file.
+#
+# @param timesyncd_purge_dropin_dirs
+#   Whether to purge the timesyncd dropin directories. This will remove any files in the dropin directories that are not managed by Puppet.
+#
+# @param coredump_use_etc_conf
+#   Whether to use the /etc/systemd/coredump.conf file.
+#
+# @param coredump_purge_dropin_dirs
+#   Whether to purge the coredump dropin directories. This will remove any files in the dropin directories that are not managed by Puppet.
+#
+# @param logind_use_etc_conf
+#   Whether to use the /etc/systemd/logind.conf file.
+#
+# @param logind_purge_dropin_dirs
+#   Whether to purge the logind dropin directories. This will remove any files in the dropin directories that are not managed by Puppet.
+#
+# @param oomd_use_etc_conf
+#   Whether to use the /etc/systemd/oomd.conf file.
+#
+# @param oomd_purge_dropin_dirs
+#   Whether to purge the oomd dropin directories. This will remove any files in the dropin directories that are not managed by Puppet.
+#
+# @param resolved_use_etc_conf
+#   Whether to use the /etc/systemd/resolved.conf file.
+#
+# @param resolved_purge_dropin_dirs
+#   Whether to purge the resolved dropin directories. This will remove any files in the dropin directories that are not managed by Puppet.
+#
+# @param system_purge_dropin_dirs
+#   Whether to purge the system.conf dropin directories. This will remove any files in the dropin directories that are not managed by Puppet.
+#
+# @param user_purge_dropin_dirs
+#   Whether to purge the user.conf dropin directories. This will remove any files in the dropin directories that are not managed by Puppet.
+#
 # @param udev_purge_rules
 #   Toggle if unmanaged files in /etc/udev/rules.d should be purged if manage_udevd is enabled
 #
@@ -391,6 +436,21 @@ class systemd (
   Systemd::JournaldSettings                           $journald_settings = {},
   Boolean                                             $journald_use_etc_conf = true,
   Boolean                                             $journald_purge_dropin_dirs = false,
+  Boolean                                             $coredump_use_etc_conf = true,
+  Boolean                                             $coredump_purge_dropin_dirs = false,
+  Boolean                                             $logind_use_etc_conf = true,
+  Boolean                                             $logind_purge_dropin_dirs = false,
+  Boolean                                             $oomd_use_etc_conf = true,
+  Boolean                                             $oomd_purge_dropin_dirs = false,
+  Boolean                                             $sleep_use_etc_conf = true,
+  Boolean                                             $sleep_purge_dropin_dirs = false,
+  Hash                                                $timesyncd_settings = {},
+  Boolean                                             $timesyncd_use_etc_conf = true,
+  Boolean                                             $timesyncd_purge_dropin_dirs = false,
+  Boolean                                             $resolved_use_etc_conf = true,
+  Boolean                                             $resolved_purge_dropin_dirs = false,
+  Boolean                                             $system_purge_dropin_dirs = false,
+  Boolean                                             $user_purge_dropin_dirs = false,
   Boolean                                             $manage_journal_upload = false,
   Systemd::JournalUploadSettings                      $journal_upload_settings = {},
   Boolean                                             $manage_journal_remote = false,
