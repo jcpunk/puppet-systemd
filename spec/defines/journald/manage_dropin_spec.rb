@@ -22,12 +22,30 @@ describe 'systemd::journald::manage_dropin' do
           is_expected.to contain_file('/etc/systemd/journald.conf.d/test.conf')
             .with_content(<<~EOF,
               # This file is managed with puppet
+              #
               [Journal]
               Storage=persistent
-
             EOF
                          )
         }
+
+        context 'with comments defined' do
+          let(:params) { super().merge(comments: %w[test comment]) }
+
+          it {
+            is_expected.to contain_file('/etc/systemd/journald.conf.d/test.conf')
+              .with_content(<<~EOF,
+                # This file is managed with puppet
+                #
+                # test
+                # comment
+                #
+                [Journal]
+                Storage=persistent
+              EOF
+                           )
+          }
+        end
 
         context 'with owner defined' do
           let(:params) { super().merge(owner: 'testuser') }
