@@ -384,6 +384,38 @@ describe 'systemd' do
           }
         end
 
+        context 'when resolved_use_etc_conf is false' do
+          let(:params) do
+            {
+              manage_resolved: true,
+              dns: ['8.8.8.8', '8.8.4.4'],
+              resolved_use_etc_conf: false,
+            }
+          end
+
+          it {
+            is_expected.to compile.with_all_deps
+            is_expected.not_to contain_ini_setting('dns')
+          }
+        end
+
+        context 'when resolved_purge_dropin_dirs is true' do
+          let(:pre_condition) do
+            'systemd::resolved::dropin_file { "test.conf": content => "[Resolve]\nDNS=8.8.8.8\n" }'
+          end
+          let(:params) do
+            {
+              manage_resolved: true,
+              resolved_purge_dropin_dirs: true,
+            }
+          end
+
+          it {
+            is_expected.to compile.with_all_deps
+            is_expected.to contain_file('/etc/systemd/resolved.conf.d').with_purge(true).with_recurse(true)
+          }
+        end
+
         context 'with alternate target' do
           let(:params) do
             {
